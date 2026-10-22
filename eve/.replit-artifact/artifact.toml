@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "E.V.E. — Uma história para Analy"
+description = "Uma experiência web interativa de aniversário que conduz Analy por um castelo, uma biblioteca, uma carta narrada, uma escolha no baile e uma homenagem final. Reaproveita o pacote e os recursos fornecidos."
+version = "1.0.0"
+id = "artifacts/eve"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22434
+
+[services.development]
+run = "pnpm --filter @workspace/eve run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/eve", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/eve/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22434"
+BASE_PATH = "/"
